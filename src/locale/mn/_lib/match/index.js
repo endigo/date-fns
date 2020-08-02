@@ -1,31 +1,31 @@
 import buildMatchPatternFn from '../../../_lib/buildMatchPatternFn/index.js'
 import buildMatchFn from '../../../_lib/buildMatchFn/index.js'
 
-var matchOrdinalNumberPattern = /^(\d+)(-р)?/i
+var matchOrdinalNumberPattern = /^(\d+)(\sон|\sдолоо хоног)?/i
 var parseOrdinalNumberPattern = /\d+/i
 
 var matchEraPatterns = {
   narrow: /^(МЭӨ|МЭ)/i,
   abbreviated: /^(м\.?\s?э\.?\s?ө\.?|м\.?\s?э\.?)/i,
-  wide: /^(Манай эрний өмнөх|Манай эрний)/i,
+  wide: /^(Манай эрний өмнөх|Манай эрний)/i
 }
 var parseEraPatterns = {
-  any: [/^b/i, /^(a|c)/i],
+  any: [/^b/i, /^(a|c)/i]
 }
 
 var matchQuarterPatterns = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
-  wide: /^[1234]-р? улирал/i,
+  wide: /^[1234]-р? улирал/i
 }
 var parseQuarterPatterns = {
-  any: [/1/i, /2/i, /3/i, /4/i],
+  any: [/1/i, /2/i, /3/i, /4/i]
 }
 
 var matchMonthPatterns = {
   narrow: /^\d/i,
   abbreviated: /^(1 сар|2 сар|3 сар|4 сар|5 сар|6 сар|7 сар|8 сар|9 сар|10 сар|11 сар|12 сар)/i,
-  wide: /^('нэгдүгээр сар'|'хоёрдугаар сар'|'гуравдугаар сар'|'дөрөвдүгээр сар'|'тавдугаар сар'|'зургаадугаар сар'|'долоодугаар сар'|'наймдугаар сар'|'есдүгээр сар'|'аравдугаар сар'|'арван нэгдүгээр сар'|'арван хоёрдугаар')/i,
+  wide: /^('нэгдүгээр\sсар'|'хоёрдугаар\sсар'|'гуравдугаар\sсар'|'дөрөвдүгээр\sсар'|'тавдугаар\sсар'|'зургаадугаар\sсар'|'долдугаар\sсар'|'наймдугаар\sсар'|'есдүгээр\sсар'|'аравдугаар\sсар'|'арван\sнэгдүгээр\sсар'|'арван\sхоёрдугаар сар')/i
 }
 var parseMonthPatterns = {
   narrow: [
@@ -40,7 +40,7 @@ var parseMonthPatterns = {
     /^9/i,
     /^10/i,
     /^11/i,
-    /^12/i,
+    /^12/i
   ],
   any: [
     /^1 сар/i,
@@ -54,24 +54,24 @@ var parseMonthPatterns = {
     /^9 сар/i,
     /^10 сар/i,
     /^11 сар/i,
-    /^12 сар/i,
-  ],
+    /^12 сар/i
+  ]
 }
 
 var matchDayPatterns = {
   narrow: /^[ндмлпб]/i,
   short: /^(ня|да|мя|лх|пү|ба|бя)/i,
-  abbreviated: /^(ня|да|мя|лх|пү|ба|бя)/i,
-  wide: /^(ням|даваа|мягмар|лхагва|пүрэв|баасан|бямба)/i,
+  abbreviated: /^(ням|дав|мяг|лха|пүр|баа|бям)/i,
+  wide: /^(ням|даваа|мягмар|лхагва|пүрэв|баасан|бямба)/i
 }
 var parseDayPatterns = {
   narrow: [/^н/i, /^д/i, /^м/i, /^л/i, /^п/i, /^б/i, /^б/i],
-  any: [/^ня/i, /^да/i, /^мя/i, /^лх/i, /^пү/i, /^ба/i, /^бя/i],
+  any: [/^ня/i, /^да/i, /^мя/i, /^лх/i, /^пү/i, /^ба/i, /^бя/i]
 }
 
 var matchDayPeriodPatterns = {
   narrow: /^(өглөө|үдээс хойш|орой|шөнө)/i,
-  any: /^(өглөө|үдээс хойш|орой|шөнө)/i,
+  any: /^(өглөө|үдээс хойш|орой|шөнө)/i
 }
 var parseDayPeriodPatterns = {
   any: {
@@ -82,24 +82,24 @@ var parseDayPeriodPatterns = {
     morning: /өглөө/i,
     afternoon: /үдээс хойш/i,
     evening: /орой/i,
-    night: /шөнө/i,
-  },
+    night: /шөнө/i
+  }
 }
 
 var match = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern,
     parsePattern: parseOrdinalNumberPattern,
-    valueCallback: function (value) {
+    valueCallback: function(value) {
       return parseInt(value, 10)
-    },
+    }
   }),
 
   era: buildMatchFn({
     matchPatterns: matchEraPatterns,
     defaultMatchWidth: 'wide',
     parsePatterns: parseEraPatterns,
-    defaultParseWidth: 'any',
+    defaultParseWidth: 'any'
   }),
 
   quarter: buildMatchFn({
@@ -107,31 +107,31 @@ var match = {
     defaultMatchWidth: 'wide',
     parsePatterns: parseQuarterPatterns,
     defaultParseWidth: 'any',
-    valueCallback: function (index) {
+    valueCallback: function(index) {
       return index + 1
-    },
+    }
   }),
 
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns,
     defaultMatchWidth: 'wide',
     parsePatterns: parseMonthPatterns,
-    defaultParseWidth: 'any',
+    defaultParseWidth: 'any'
   }),
 
   day: buildMatchFn({
     matchPatterns: matchDayPatterns,
     defaultMatchWidth: 'wide',
     parsePatterns: parseDayPatterns,
-    defaultParseWidth: 'any',
+    defaultParseWidth: 'any'
   }),
 
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns,
     defaultMatchWidth: 'any',
     parsePatterns: parseDayPeriodPatterns,
-    defaultParseWidth: 'any',
-  }),
+    defaultParseWidth: 'any'
+  })
 }
 
 export default match
